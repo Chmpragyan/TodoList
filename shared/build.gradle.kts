@@ -55,7 +55,7 @@ android {
 sqldelight {
     databases {
         create("AppDatabase") {
-            packageName.set("com.example.todolist.cache")
+            packageName.set("com.example.todolist")
         }
     }
 }
