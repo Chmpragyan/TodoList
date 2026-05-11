@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    id("app.cash.sqldelight") version "2.3.2"
 }
 
 kotlin {
@@ -24,7 +25,14 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            // put your Multiplatform dependencies here
+            implementation(libs.runtime)
+            implementation(libs.coroutines.extensions1)
+        }
+        androidMain.dependencies {
+            implementation(libs.android.driver)
+        }
+        iosMain.dependencies {
+            implementation(libs.native.driver)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
