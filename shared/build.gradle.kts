@@ -1,4 +1,3 @@
-import com.android.ide.common.symbols.getPackageNameFromManifest
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
