@@ -6,7 +6,7 @@ CREATE TABLE Todo(
 
 -- Insert Note
 insertTodo:
-INSERT INTO Todo(id, title, description) VALUES (?, ?,?);
+INSERT INTO Todo(title, description) VALUES (?,?);
 
 -- Select
 selectAllTodo:
