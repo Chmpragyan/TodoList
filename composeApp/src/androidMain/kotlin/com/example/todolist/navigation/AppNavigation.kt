@@ -1,26 +1,39 @@
 package com.example.todolist.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.todolist.AddTodoScreen
 import com.example.todolist.TodoScreen
+import com.example.todolist.presentation.TodoViewModel
 
 @Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
+fun AppNavigation(
+    viewModel: TodoViewModel,
+    navController: NavHostController,
+    paddingValues: PaddingValues
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.TodoScreen.route
+        startDestination = Screen.TodoScreen.route,
+        modifier = Modifier.padding(paddingValues)
     ) {
         composable(Screen.TodoScreen.route) {
-            TodoScreen(navController)
+            TodoScreen(todos = state.todos)
         }
-
         composable(Screen.AddTodoScreen.route) {
-            AddTodoScreen(navController)
+            AddTodoScreen(onAddNote = { title, description ->
+                viewModel.addTodo(title, description)
+                navController.popBackStack()
+            })
         }
     }
 }
