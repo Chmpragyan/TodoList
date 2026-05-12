@@ -27,7 +27,12 @@ fun AppNavigation(
         modifier = Modifier.padding(paddingValues)
     ) {
         composable(Screen.TodoScreen.route) {
-            TodoScreen(todos = state.todos)
+            TodoScreen(
+                todos = state.todos,
+                onDelete = { id ->
+                    viewModel.deleteTodo(id)
+                }
+            )
         }
         composable(Screen.AddTodoScreen.route) {
             AddTodoScreen(onAddNote = { title, description ->

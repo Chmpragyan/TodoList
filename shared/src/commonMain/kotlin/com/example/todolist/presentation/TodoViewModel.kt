@@ -43,7 +43,7 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
         updateTodoUseCase(id, title, description)
     }
 
-    private fun deleteTodo(id: Long) {
+    fun deleteTodo(id: Long) {
         deleteTodoUseCase(id)
         loadTodos()
     }
