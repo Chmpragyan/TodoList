@@ -26,13 +26,13 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
         loadTodos()
     }
 
-    private fun loadTodos() {
+    fun loadTodos() {
         _state = _state.copy(
             todos = getTodosUseCase()
         )
     }
 
-    private fun addTodo(title: String, description: String) {
+    fun addTodo(title: String, description: String) {
         addTodoUseCase(title, description)
         loadTodos()
     }
