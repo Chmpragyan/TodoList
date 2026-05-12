@@ -1,7 +1,10 @@
-package com.example.todolist
+package com.example.todolist.data.repository
 
-class AppDataSource(driverFactory: DatabaseDriverFactory) {
-    private val database = AppDatabase(driverFactory.createDriver())
+import com.example.todolist.Todo
+import com.example.todolist.database.Database
+
+class TodoRepository(database: Database) {
+
     private val queries = database.todoQueries
 
     fun getAllTodos(): List<Todo> = queries.selectAllTodo().executeAsList()
