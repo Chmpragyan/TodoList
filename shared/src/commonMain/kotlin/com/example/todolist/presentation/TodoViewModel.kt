@@ -7,6 +7,9 @@ import com.example.todolist.domain.usecase.AddTodoUseCase
 import com.example.todolist.domain.usecase.DeleteTodoUseCase
 import com.example.todolist.domain.usecase.GetTodoUseCase
 import com.example.todolist.domain.usecase.UpdateTodoUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class TodoViewModel(driverFactory: DatabaseDriverFactory) {
     private val repository = TodoRepository(
@@ -18,16 +21,15 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
     private val updateTodoUseCase = UpdateTodoUseCase(repository)
     private val deleteTodoUseCase = DeleteTodoUseCase(repository)
 
-    private var _state = TodoState()
-    val state: TodoState
-        get() = _state
+    private val _state = MutableStateFlow(TodoState())
+    val state: StateFlow<TodoState> = _state.asStateFlow()
 
     init {
         loadTodos()
     }
 
     fun loadTodos() {
-        _state = _state.copy(
+        _state.value = _state.value.copy(
             todos = getTodosUseCase()
         )
     }

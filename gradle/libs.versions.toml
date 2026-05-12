@@ -14,6 +14,8 @@ coroutinesExtensions = "2.3.2"
 junit = "4.13.2"
 kotlin = "2.3.21"
 material3 = "1.10.0-alpha05"
+navigation-compose = "2.9.8"
+material-icons = "1.7.8"
 
 [libraries]
 android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "coroutinesExtensions" }
@@ -35,6 +37,8 @@ compose-material3 = { module = "org.jetbrains.compose.material3:material3", vers
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "material-icons" }
 native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "coroutinesExtensions" }
 runtime = { module = "app.cash.sqldelight:runtime", version.ref = "coroutinesExtensions" }
 
