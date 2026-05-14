@@ -1,5 +1,7 @@
 package com.example.todolist.presentation
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todolist.DatabaseDriverFactory
 import com.example.todolist.data.model.Todo
 import com.example.todolist.data.repository.TodoRepository
@@ -8,11 +10,15 @@ import com.example.todolist.domain.usecase.AddTodoUseCase
 import com.example.todolist.domain.usecase.DeleteTodoUseCase
 import com.example.todolist.domain.usecase.GetTodoUseCase
 import com.example.todolist.domain.usecase.UpdateTodoUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class TodoViewModel(driverFactory: DatabaseDriverFactory) {
+class TodoViewModel(driverFactory: DatabaseDriverFactory) : ViewModel() {
     private val repository = TodoRepository(
         Database(driverFactory)
     )
@@ -30,28 +36,50 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
     }
 
     fun loadTodos() {
-        _state.value = _state.value.copy(
-            todos = getTodosUseCase()
-        )
+        viewModelScope.launch {
+            // Dispatchers.Default runs on background threads across Android and iOS
+            val updatedList = withContext(Dispatchers.Default) {
+                getTodosUseCase()
+            }
+            _state.update { current ->
+                current.copy(todos = updatedList)
+            }
+        }
     }
 
     fun addTodo(title: String, description: String) {
-        addTodoUseCase(title, description)
-        loadTodos()
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                addTodoUseCase(title, description)
+            }
+            loadTodos()
+        }
     }
 
     fun updateTodo(id: Long, title: String, description: String) {
-        updateTodoUseCase(id, title, description)
-        loadTodos()
-        _state.value = _state.value.copy(editTodo = null)
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                updateTodoUseCase(id, title, description)
+            }
+            loadTodos()
+            _state.update { current ->
+                current.copy(editTodo = null)
+            }
+        }
     }
 
     fun selectTodo(todo: Todo?) {
-        _state.value = _state.value.copy(editTodo = todo)
+        _state.update { current ->
+            current.copy(editTodo = todo)
+        }
     }
 
     fun deleteTodo(id: Long) {
-        deleteTodoUseCase(id)
-        loadTodos()
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                deleteTodoUseCase(id)
+            }
+            loadTodos()
+        }
     }
 }

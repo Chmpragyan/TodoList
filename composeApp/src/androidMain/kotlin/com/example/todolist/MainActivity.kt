@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel = TodoViewModel(
-            DatabaseDriverFactory(applicationContext)
+            AndroidDatabaseDriverFactory(applicationContext)
         )
 
         setContent {
