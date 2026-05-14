@@ -1,12 +1,16 @@
 package com.example.todolist.presentation
 
 import com.example.todolist.DatabaseDriverFactory
+import com.example.todolist.data.model.Todo
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.database.Database
 import com.example.todolist.domain.usecase.AddTodoUseCase
 import com.example.todolist.domain.usecase.DeleteTodoUseCase
 import com.example.todolist.domain.usecase.GetTodoUseCase
 import com.example.todolist.domain.usecase.UpdateTodoUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class TodoViewModel(driverFactory: DatabaseDriverFactory) {
     private val repository = TodoRepository(
@@ -18,16 +22,15 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
     private val updateTodoUseCase = UpdateTodoUseCase(repository)
     private val deleteTodoUseCase = DeleteTodoUseCase(repository)
 
-    private var _state = TodoState()
-    val state: TodoState
-        get() = _state
+    private val _state = MutableStateFlow(TodoState())
+    val state: StateFlow<TodoState> = _state.asStateFlow()
 
     init {
         loadTodos()
     }
 
     fun loadTodos() {
-        _state = _state.copy(
+        _state.value = _state.value.copy(
             todos = getTodosUseCase()
         )
     }
@@ -37,11 +40,17 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
         loadTodos()
     }
 
-    private fun updateTodo(id: Long, title: String, description: String) {
+    fun updateTodo(id: Long, title: String, description: String) {
         updateTodoUseCase(id, title, description)
+        loadTodos()
+        _state.value = _state.value.copy(editTodo = null)
     }
 
-    private fun deleteTodo(id: Long) {
+    fun selectTodo(todo: Todo?) {
+        _state.value = _state.value.copy(editTodo = todo)
+    }
+
+    fun deleteTodo(id: Long) {
         deleteTodoUseCase(id)
         loadTodos()
     }

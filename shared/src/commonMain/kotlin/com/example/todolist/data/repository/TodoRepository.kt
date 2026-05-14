@@ -12,6 +12,7 @@ class TodoRepository(database: Database) {
             .executeAsList()
             .map {
                 Todo(
+                    id = it.id,
                     title = it.title,
                     description = it.description
                 )
