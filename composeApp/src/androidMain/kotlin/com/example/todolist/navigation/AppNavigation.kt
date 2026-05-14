@@ -31,14 +31,25 @@ fun AppNavigation(
                 todos = state.todos,
                 onDelete = { id ->
                     viewModel.deleteTodo(id)
+                },
+                onEdit = { todo ->
+                    viewModel.selectTodo(todo)
+                    navController.navigate(Screen.AddTodoScreen.route)
                 }
             )
         }
         composable(Screen.AddTodoScreen.route) {
-            AddTodoScreen(onAddNote = { title, description ->
-                viewModel.addTodo(title, description)
-                navController.popBackStack()
-            })
+            AddTodoScreen(
+                onAddNote = { title, description ->
+                    viewModel.addTodo(title, description)
+                    navController.popBackStack()
+                },
+                onUpdateNote = { id, title, description ->
+                    viewModel.updateTodo(id, title, description)
+                    navController.popBackStack()
+                },
+                todo = state.editTodo
+            )
         }
     }
 }

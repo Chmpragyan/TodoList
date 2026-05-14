@@ -49,7 +49,10 @@ fun App(viewModel: TodoViewModel) {
                     },
                     actions = {
                         if (currentRoute == Screen.TodoScreen.route) {
-                            IconButton(onClick = { navController.navigate(Screen.AddTodoScreen.route) }) {
+                            IconButton(onClick = {
+                                viewModel.selectTodo(null)
+                                navController.navigate(Screen.AddTodoScreen.route)
+                            }) {
                                 Icon(
                                     imageVector = Icons.Default.Add,
                                     contentDescription = "Add Note"

@@ -15,15 +15,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.todolist.data.model.Todo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTodoScreen(
     onAddNote: (String, String) -> Unit,
-    modifier: Modifier = Modifier
+    onUpdateNote: (Long, String, String) -> Unit,
+    modifier: Modifier = Modifier,
+    todo: Todo? = null
 ) {
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(todo?.title ?: "") }
+    var description by remember { mutableStateOf(todo?.description ?: "") }
 
     Column(
         modifier = modifier
@@ -47,14 +50,18 @@ fun AddTodoScreen(
         Button(
             onClick = {
                 if (title.isNotBlank()) {
-                    onAddNote(title, description)
+                    if (todo != null) {
+                        onUpdateNote(todo.id, title, description)
+                    } else {
+                        onAddNote(title, description)
+                    }
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text("Add Note")
+            Text(if (todo != null) "Update Note" else "Add Note")
         }
     }
 }

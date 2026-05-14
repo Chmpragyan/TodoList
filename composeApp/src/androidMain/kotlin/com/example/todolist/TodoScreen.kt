@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +32,7 @@ import com.example.todolist.data.model.Todo
 fun TodoScreen(
     todos: List<Todo>,
     onDelete: (Long) -> Unit,
+    onEdit: (Todo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -38,7 +40,7 @@ fun TodoScreen(
         contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
     ) {
         items(todos) { todo ->
-            TodoItem(todo, onDelete)
+            TodoItem(todo, onDelete, onEdit)
         }
     }
 }
@@ -73,7 +75,8 @@ fun AppToolBar(onNextPage: () -> Unit) {
 @Composable
 fun TodoItem(
     todo: Todo,
-    onDelete: (Long) -> Unit
+    onDelete: (Long) -> Unit,
+    onEdit: (Todo) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -89,6 +92,12 @@ fun TodoItem(
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = todo.title, style = MaterialTheme.typography.titleLarge)
                 Text(text = todo.description, style = MaterialTheme.typography.bodyMedium)
+            }
+            IconButton(onClick = { onEdit(todo) }) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Todo"
+                )
             }
             IconButton(onClick = { onDelete(todo.id) }) {
                 Icon(

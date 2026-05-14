@@ -1,6 +1,7 @@
 package com.example.todolist.presentation
 
 import com.example.todolist.DatabaseDriverFactory
+import com.example.todolist.data.model.Todo
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.database.Database
 import com.example.todolist.domain.usecase.AddTodoUseCase
@@ -39,8 +40,14 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) {
         loadTodos()
     }
 
-    private fun updateTodo(id: Long, title: String, description: String) {
+    fun updateTodo(id: Long, title: String, description: String) {
         updateTodoUseCase(id, title, description)
+        loadTodos()
+        _state.value = _state.value.copy(editTodo = null)
+    }
+
+    fun selectTodo(todo: Todo?) {
+        _state.value = _state.value.copy(editTodo = todo)
     }
 
     fun deleteTodo(id: Long) {
