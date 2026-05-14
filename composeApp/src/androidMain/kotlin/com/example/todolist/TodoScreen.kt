@@ -45,33 +45,6 @@ fun TodoScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppToolBar(onNextPage: () -> Unit) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = { Text("Todo List") },
-                actions = {
-                    IconButton(onClick = { onNextPage() }) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Favorite Icon"
-                        )
-
-                    }
-                },
-            )
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues))
-    }
-}
-
 @Composable
 fun TodoItem(
     todo: Todo,
