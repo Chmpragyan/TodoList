@@ -6,6 +6,7 @@ import Foundation
 import SwiftUI
 
 struct TodoScreen: View {
+    @StateObject var todoViewModel = IOSTodoViewModel()
     @State private var navigateToAddScreen = false
 
     var body: some View {
@@ -25,7 +26,7 @@ struct TodoScreen: View {
             }
         }
         .navigationDestination(isPresented: $navigateToAddScreen) {
-            AddTodoScreen()
+            AddTodoScreen(viewModel: todoViewModel)
         }
     }
 }
