@@ -17,22 +17,14 @@ struct AddTodoScreen: View {
         VStack {
             Form {
                 Section(header: Text("Todo Details")) {
-                    TextField("Title", text: $title)
+                    TextField("Title", text: $title, axis: .vertical)
                         .padding()
                         .cornerRadius(10)
                         .textFieldStyle(.plain)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
-                    TextField("Description", text: $description)
+                    TextField("Description", text: $description, axis: .vertical)
                         .padding()
                         .cornerRadius(10)
                         .textFieldStyle(.plain)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
                 }
             }
 

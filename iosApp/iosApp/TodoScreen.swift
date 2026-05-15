@@ -17,9 +17,11 @@ struct TodoScreen: View {
                     VStack(alignment: .leading) {
                         Text(todo.title)
                             .font(.headline)
+                            .lineLimit(1)
                         Text(todo.todoDescription)
                             .font(.subheadline)
                             .foregroundColor(.gray)
+                            .lineLimit(2)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {

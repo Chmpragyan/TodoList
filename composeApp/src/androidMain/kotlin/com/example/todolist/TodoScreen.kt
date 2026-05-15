@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.todolist.data.model.TodoModel
 
@@ -61,8 +62,8 @@ fun TodoItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = todo.title, style = MaterialTheme.typography.titleLarge)
-                Text(text = todo.todoDescription, style = MaterialTheme.typography.bodyMedium)
+                Text(text = todo.title, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(text = todo.todoDescription, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
             IconButton(onClick = { onEdit(todo) }) {
                 Icon(
