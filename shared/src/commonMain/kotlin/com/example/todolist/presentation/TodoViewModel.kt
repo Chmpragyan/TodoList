@@ -82,4 +82,12 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) : ViewModel() {
             loadTodos()
         }
     }
+
+    fun observeState(onEach: (TodoState) -> Unit) {
+        viewModelScope.launch {
+            state.collect {
+                onEach(it)
+            }
+        }
+    }
 }

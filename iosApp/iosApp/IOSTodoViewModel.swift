@@ -9,10 +9,17 @@ import Shared
 @MainActor
 class IOSTodoViewModel: ObservableObject {
     @Published var state = TodoState(todos: [], editTodo: nil)
-    private let viewModel = IOSTodoViewModel()
+    private let viewModel: TodoViewModel
 
-    init() {
+    init(viewModel: TodoViewModel) {
+        self.viewModel = viewModel
+        viewModel.observeState { state in
+            self.state = state
+        }
+    }
 
+    convenience init() {
+        self.init(viewModel: TodoViewModel(driverFactory: IosDatabaseDriverFactory()))
     }
 
     func loadTodos() {
