@@ -10,11 +10,18 @@ androidx-espresso = "3.7.0"
 androidx-lifecycle = "2.10.0"
 androidx-testExt = "1.3.0"
 composeMultiplatform = "1.10.3"
+coroutinesExtensions = "2.3.2"
 junit = "4.13.2"
 kotlin = "2.3.21"
+lifecycleViewmodel = "2.10.0"
 material3 = "1.10.0-alpha05"
+navigation-compose = "2.9.8"
+material-icons = "1.7.8"
 
 [libraries]
+android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "coroutinesExtensions" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
+coroutines-extensions1 = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -32,6 +39,10 @@ compose-material3 = { module = "org.jetbrains.compose.material3:material3", vers
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "material-icons" }
+native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "coroutinesExtensions" }
+runtime = { module = "app.cash.sqldelight:runtime", version.ref = "coroutinesExtensions" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
