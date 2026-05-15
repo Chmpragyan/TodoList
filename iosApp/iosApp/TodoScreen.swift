@@ -12,13 +12,23 @@ struct TodoScreen: View {
     var body: some View {
         List {
             ForEach(todoViewModel.state.todos, id: \.id) { todo in
-                VStack(alignment: .leading) {
-                    Text(todo.title)
-                        .font(.headline)
-                    Text(todo.todoDescription)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(todo.title)
+                            .font(.headline)
+                        Text(todo.todoDescription)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    Button(action: {
+                        todoViewModel.deleteTodo(id: todo.id)
+                    }) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
                 }
+
             }
             .onDelete { indexSet in
                 indexSet.forEach { index in
