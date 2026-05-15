@@ -21,18 +21,37 @@ struct TodoScreen: View {
                             .foregroundColor(.gray)
                     }
                     Spacer()
+
+                    // Edit Button
                     Button(action: {
                         todoViewModel.selectTodo(todo: todo)
                         navigateToAddScreen = true
                     }) {
                         Image(systemName: "pencil")
                             .foregroundColor(.black)
+                            .frame(width: 44, height: 44)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 0.5)
+                            )
                     }
+                    .buttonStyle(.plain)
+
+                    // Delete Button
                     Button(action: {
                         todoViewModel.deleteTodo(id: todo.id)
                     }) {
                         Image(systemName: "trash")
                             .foregroundColor(.red)
+                            .frame(width: 44, height: 44)
+                            .background(.white)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 0.5))
+
                     }
                     .buttonStyle(.plain)
                 }
