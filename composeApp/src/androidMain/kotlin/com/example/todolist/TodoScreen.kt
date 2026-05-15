@@ -28,6 +28,7 @@ fun TodoScreen(
     todos: List<TodoModel>,
     onDelete: (Long) -> Unit,
     onEdit: (TodoModel) -> Unit,
+    onItemClick: (TodoModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -35,7 +36,7 @@ fun TodoScreen(
         contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
     ) {
         items(todos) { todo ->
-            TodoItem(todo, onDelete, onEdit)
+            TodoItem(todo, onDelete, onEdit, onItemClick)
         }
     }
 }
@@ -44,9 +45,11 @@ fun TodoScreen(
 fun TodoItem(
     todo: TodoModel,
     onDelete: (Long) -> Unit,
-    onEdit: (TodoModel) -> Unit
+    onEdit: (TodoModel) -> Unit,
+    onItemClick: (TodoModel) -> Unit
 ) {
     Card(
+        onClick = { onItemClick(todo) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)

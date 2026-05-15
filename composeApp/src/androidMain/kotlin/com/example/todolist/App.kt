@@ -35,7 +35,14 @@ fun App(viewModel: TodoViewModel) {
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        Text(if (currentRoute == Screen.TodoScreen.route) Screen.TodoScreen.route else Screen.AddTodoScreen.route)
+                        Text(
+                            when (currentRoute) {
+                                Screen.TodoScreen.route -> Screen.TodoScreen.route
+                                Screen.AddTodoScreen.route -> Screen.AddTodoScreen.route
+                                Screen.TodoDetailScreen.route -> Screen.TodoDetailScreen.route
+                                else -> "Todo App"
+                            }
+                        )
                     },
                     navigationIcon = {
                         if (currentRoute != Screen.TodoScreen.route) {
