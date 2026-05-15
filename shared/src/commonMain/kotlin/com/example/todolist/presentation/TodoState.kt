@@ -1,8 +1,8 @@
 package com.example.todolist.presentation
 
-import com.example.todolist.data.model.Todo
+import com.example.todolist.data.model.TodoModel
 
 data class TodoState(
-    val todos: List<Todo> = emptyList(),
-    val editTodo: Todo? = null
+    val todos: List<TodoModel> = emptyList(),
+    val editTodo: TodoModel? = null
 )

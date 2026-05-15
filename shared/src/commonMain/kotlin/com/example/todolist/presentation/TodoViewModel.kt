@@ -3,7 +3,7 @@ package com.example.todolist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.DatabaseDriverFactory
-import com.example.todolist.data.model.Todo
+import com.example.todolist.data.model.TodoModel
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.database.Database
 import com.example.todolist.domain.usecase.AddTodoUseCase
@@ -68,7 +68,7 @@ class TodoViewModel(driverFactory: DatabaseDriverFactory) : ViewModel() {
         }
     }
 
-    fun selectTodo(todo: Todo?) {
+    fun selectTodo(todo: TodoModel?) {
         _state.update { current ->
             current.copy(editTodo = todo)
         }
