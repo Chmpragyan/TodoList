@@ -34,7 +34,7 @@ class IOSTodoViewModel: ObservableObject {
         viewModel.updateTodo(id: id, title: title, description: description)
     }
 
-    func selectTodo(todo: TodoModel) {
+    func selectTodo(todo: TodoModel?) {
         viewModel.selectTodo(todo: todo)
     }
 

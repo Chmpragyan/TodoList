@@ -37,10 +37,14 @@ struct AddTodoScreen: View {
             }
 
             Button(action: {
-                viewModel.addTodo(title: title, description: description)
+                if let editTodo = viewModel.state.editTodo {
+                    viewModel.updateTodo(id: editTodo.id, title: editTodo.title, description: editTodo.todoDescription)
+                } else {
+                    viewModel.addTodo(title: title, description: description)
+                }
                 dismiss()
             }) {
-                Text("Add Todo")
+                Text(viewModel.state.editTodo != nil ? "Update Note" : "Add Note")
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(title.isEmpty ? Color.gray : Color.blue)
@@ -50,6 +54,12 @@ struct AddTodoScreen: View {
             .disabled(title.isEmpty)
             .padding()
         }
-        .navigationTitle("Add Todo")
+        .navigationTitle(viewModel.state.editTodo != nil ? "Edit Todo" : "Add Todo")
+        .onAppear {
+            if let editTodo = viewModel.state.editTodo {
+                title = editTodo.title
+                description = editTodo.todoDescription
+            }
+        }
     }
 }

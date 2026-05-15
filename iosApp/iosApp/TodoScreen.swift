@@ -22,13 +22,20 @@ struct TodoScreen: View {
                     }
                     Spacer()
                     Button(action: {
+                        todoViewModel.selectTodo(todo: todo)
+                        navigateToAddScreen = true
+                    }) {
+                        Image(systemName: "pencil")
+                            .foregroundColor(.black)
+                    }
+                    Button(action: {
                         todoViewModel.deleteTodo(id: todo.id)
                     }) {
                         Image(systemName: "trash")
                             .foregroundColor(.red)
                     }
+                    .buttonStyle(.plain)
                 }
-
             }
             .onDelete { indexSet in
                 indexSet.forEach { index in
@@ -42,6 +49,7 @@ struct TodoScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
+                    todoViewModel.selectTodo(todo: nil)
                     navigateToAddScreen = true
                 }) {
                     Image(systemName: "plus")
