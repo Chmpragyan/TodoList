@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.todolist.AddTodoScreen
+import com.example.todolist.TodoDetailScreen
 import com.example.todolist.TodoScreen
 import com.example.todolist.presentation.TodoViewModel
 
@@ -35,6 +36,10 @@ fun AppNavigation(
                 onEdit = { todo ->
                     viewModel.selectTodo(todo)
                     navController.navigate(Screen.AddTodoScreen.route)
+                },
+                onItemClick = { todo ->
+                    viewModel.selectTodo(todo)
+                    navController.navigate(Screen.TodoDetailScreen.route)
                 }
             )
         }
@@ -48,6 +53,11 @@ fun AppNavigation(
                     viewModel.updateTodo(id, title, description)
                     navController.popBackStack()
                 },
+                todo = state.editTodo
+            )
+        }
+        composable(Screen.TodoDetailScreen.route) {
+            TodoDetailScreen(
                 todo = state.editTodo
             )
         }

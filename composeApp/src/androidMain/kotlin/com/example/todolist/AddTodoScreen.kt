@@ -26,7 +26,7 @@ fun AddTodoScreen(
     todo: TodoModel? = null
 ) {
     var title by remember { mutableStateOf(todo?.title ?: "") }
-    var description by remember { mutableStateOf(todo?.description ?: "") }
+    var description by remember { mutableStateOf(todo?.todoDescription ?: "") }
 
     Column(
         modifier = modifier

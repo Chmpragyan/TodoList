@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.todolist.data.model.TodoModel
 
@@ -28,6 +29,7 @@ fun TodoScreen(
     todos: List<TodoModel>,
     onDelete: (Long) -> Unit,
     onEdit: (TodoModel) -> Unit,
+    onItemClick: (TodoModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -35,7 +37,7 @@ fun TodoScreen(
         contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
     ) {
         items(todos) { todo ->
-            TodoItem(todo, onDelete, onEdit)
+            TodoItem(todo, onDelete, onEdit, onItemClick)
         }
     }
 }
@@ -44,9 +46,11 @@ fun TodoScreen(
 fun TodoItem(
     todo: TodoModel,
     onDelete: (Long) -> Unit,
-    onEdit: (TodoModel) -> Unit
+    onEdit: (TodoModel) -> Unit,
+    onItemClick: (TodoModel) -> Unit
 ) {
     Card(
+        onClick = { onItemClick(todo) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -58,8 +62,8 @@ fun TodoItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = todo.title, style = MaterialTheme.typography.titleLarge)
-                Text(text = todo.description, style = MaterialTheme.typography.bodyMedium)
+                Text(text = todo.title, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(text = todo.todoDescription, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
             IconButton(onClick = { onEdit(todo) }) {
                 Icon(
