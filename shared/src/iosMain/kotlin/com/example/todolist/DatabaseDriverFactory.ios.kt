@@ -3,8 +3,8 @@ package com.example.todolist
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 
-actual class DatabaseDriverFactory {
-    actual fun createDriver(): SqlDriver {
+class IosDatabaseDriverFactory : DatabaseDriverFactory {
+    override fun createDriver(): SqlDriver {
         return NativeSqliteDriver(AppDatabase.Schema, "AppDatabase.db")
     }
 }

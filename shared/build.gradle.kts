@@ -20,6 +20,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
+            linkerOpts("-lsqlite3", "-framework", "SwiftUI")
         }
     }
 
@@ -27,6 +28,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.runtime)
             implementation(libs.coroutines.extensions1)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.viewmodel)
         }
         androidMain.dependencies {
             implementation(libs.android.driver)

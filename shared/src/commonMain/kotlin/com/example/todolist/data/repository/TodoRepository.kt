@@ -1,17 +1,17 @@
 package com.example.todolist.data.repository
 
-import com.example.todolist.data.model.Todo
+import com.example.todolist.data.model.TodoModel
 import com.example.todolist.database.Database
 
 class TodoRepository(database: Database) {
     private val queries = database.todoQueries
 
-    fun getTodos(): List<Todo> {
+    fun getTodos(): List<TodoModel> {
         return queries
             .selectAllTodo()
             .executeAsList()
             .map {
-                Todo(
+                TodoModel(
                     id = it.id,
                     title = it.title,
                     description = it.description
