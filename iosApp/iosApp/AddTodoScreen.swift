@@ -38,13 +38,13 @@ struct AddTodoScreen: View {
 
             Button(action: {
                 if let editTodo = viewModel.state.editTodo {
-                    viewModel.updateTodo(id: editTodo.id, title: editTodo.title, description: editTodo.todoDescription)
+                    viewModel.updateTodo(id: editTodo.id, title: title, description: description)
                 } else {
                     viewModel.addTodo(title: title, description: description)
                 }
                 dismiss()
             }) {
-                Text(viewModel.state.editTodo != nil ? "Update Note" : "Add Note")
+                Text(viewModel.state.editTodo != nil ? "Update Todo" : "Add Todo")
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(title.isEmpty ? Color.gray : Color.blue)
