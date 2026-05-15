@@ -4,10 +4,11 @@
 
 import Foundation
 import SwiftUI
+import Shared
 
 struct TodoScreen: View {
-    @StateObject var todoViewModel = IOSTodoViewModel()
-    @State private var navigateToAddScreen = false
+    @ObservedObject var todoViewModel: IOSTodoViewModel
+    @EnvironmentObject var router: Router
 
     var body: some View {
         List {
@@ -20,12 +21,17 @@ struct TodoScreen: View {
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        router.navigate(to: .todoDetail(todo))
+                    }
+                    
                     Spacer()
 
                     // Edit Button
                     Button(action: {
                         todoViewModel.selectTodo(todo: todo)
-                        navigateToAddScreen = true
+                        router.navigate(to: .editTodo(todo))
                     }) {
                         Image(systemName: "pencil")
                             .foregroundColor(.black)
@@ -69,14 +75,11 @@ struct TodoScreen: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
                     todoViewModel.selectTodo(todo: nil)
-                    navigateToAddScreen = true
+                    router.navigate(to: .addTodo)
                 }) {
                     Image(systemName: "plus")
                 }
             }
-        }
-        .navigationDestination(isPresented: $navigateToAddScreen) {
-            AddTodoScreen(viewModel: todoViewModel)
         }
         .onAppear {
             todoViewModel.loadTodos()
