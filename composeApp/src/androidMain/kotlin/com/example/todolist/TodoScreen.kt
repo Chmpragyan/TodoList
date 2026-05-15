@@ -59,7 +59,7 @@ fun TodoItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = todo.title, style = MaterialTheme.typography.titleLarge)
-                Text(text = todo.description, style = MaterialTheme.typography.bodyMedium)
+                Text(text = todo.todoDescription, style = MaterialTheme.typography.bodyMedium)
             }
             IconButton(onClick = { onEdit(todo) }) {
                 Icon(

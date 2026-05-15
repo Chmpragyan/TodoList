@@ -14,7 +14,7 @@ class TodoRepository(database: Database) {
                 TodoModel(
                     id = it.id,
                     title = it.title,
-                    description = it.description
+                    todoDescription = it.description
                 )
             }
     }

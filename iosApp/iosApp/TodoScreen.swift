@@ -11,8 +11,21 @@ struct TodoScreen: View {
 
     var body: some View {
         List {
-            Text("Sample Todo Item 1")
-            Text("Sample Todo Item 2")
+            ForEach(todoViewModel.state.todos, id: \.id) { todo in
+                VStack(alignment: .leading) {
+                    Text(todo.title)
+                        .font(.headline)
+                    Text(todo.todoDescription)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+            }
+            .onDelete { indexSet in
+                indexSet.forEach { index in
+                    let todo = todoViewModel.state.todos[index]
+                    todoViewModel.deleteTodo(id: todo.id)
+                }
+            }
         }
         .navigationTitle("Todo")
         .navigationBarTitleDisplayMode(.inline)
@@ -27,6 +40,9 @@ struct TodoScreen: View {
         }
         .navigationDestination(isPresented: $navigateToAddScreen) {
             AddTodoScreen(viewModel: todoViewModel)
+        }
+        .onAppear {
+            todoViewModel.loadTodos()
         }
     }
 }
