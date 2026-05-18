@@ -1,3 +1,73 @@
+1. Project Overview
+
+This project is a Kotlin Multiplatform (KMP) application that shares business logic, data persistence, and view models across Android and iOS.
+
+- Shared Module (:shared): Contains the core logic, SQLDelight database, repositories, useCases, and the viewModel.
+
+- Android App (:composeApp): A Jetpack Compose application that consumes the shared TodoViewModel.
+
+- iOS App (iosApp): A SwiftUI application that also consumes the shared TodoViewModel.
+
+2. Core Implementation (Shared Module)
+A. Data Layer (SQLDelight)
+Persistence is handled using SQLDelight, which generates type-safe APIs from SQL statements.
+
+- Schema: Defined in Todo.sq, specifying the Todo table and operations (selectAllTodo, insertTodo, updateTodo, deleteTodoById).
+
+- Database Driver: A DatabaseDriverFactory is used with expect/actual to provide platform-specific drivers (AndroidSqliteDriver and NativeSqliteDriver).
+
+B. Domain Layer
+
+- Model: TodoModel defines the data structure used across the app.
+
+- Use Cases: Clean architecture is applied via use cases (GetTodoUseCase, AddTodoUseCase, etc.), ensuring the ViewModel interacts with specific business actions.
+
+C. Presentation Layer (TodoViewModel)
+
+The TodoViewModel is shared across platforms using androidx.lifecycle.ViewModel.
+
+- State Management: Uses StateFlow<TodoState> to expose the current list of todos and any todo being edited.
+
+- Concurrency: Uses viewModelScope with Dispatchers.Default to perform database operations off the main thread, ensuring smooth UI performance on both platforms.
+
+3. Android Implementation (composeApp)
+
+The Android UI is built with Jetpack Compose and integrated with the shared ViewModel.
+
+Navigation
+
+- Navigation Graph: AppNavigation uses the Navigation Component to handle transitions between three main screens:
+
+- TodoScreen: Displays the list of tasks.
+
+- AddTodoScreen: Used for creating or editing a task.
+
+- TodoDetailScreen: Shows the details of a selected task.
+
+UI Components
+
+- Scaffold: The main App.kt uses a Scaffold with a TopAppBar that dynamically changes its title and actions (like the "Add" button) based on the current navigation route.
+
+- State Collection: Uses collectAsStateWithLifecycle() to observe the TodoState in a lifecycle-aware manner.
+
+4. iOS Implementation (iosApp)
+
+The iOS app uses SwiftUI for its UI but shares the same logic.
+
+- ViewModel Injection: The TodoViewModel is instantiated in Kotlin and accessed in Swift.
+
+- State Observation: A wrapper (often called IOSTodoViewModel or similar) is used in Swift to observe the StateFlow from the shared module and update the SwiftUI views.
+
+5. Implementation Summary
+
+- Shared Persistence: SQLDelight handles the local SQLite database.
+
+- Shared Logic: Repositories and Use Cases encapsulate the "how" and "what" of the app.
+
+- Shared ViewModel: TodoViewModel manages the UI state and interacts with the domain layer.
+
+- Platform UI: Android (Compose) and iOS (SwiftUI) focus purely on rendering the state and sending user events back to the shared ViewModel.
+
 This is a Kotlin Multiplatform project targeting Android, iOS.
 
 * [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
